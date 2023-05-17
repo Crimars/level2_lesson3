@@ -46,7 +46,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    static final int size = 100;
+    static final int size = 10000;
     static final int half = size / 2;
 
     float[] arr = new float[size];
@@ -105,19 +105,21 @@ public class Main {
         });
         two.start();
 
-        try {
-            one.join();
-            two.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+//        try {
+//            one.join();
+//            two.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
 
             System.arraycopy(leftHalf, 0, arr, 0, half);
             System.arraycopy(rightHalf, 0, arr, half, half);
             System.out.println(Arrays.toString(arr));
 
-        }
         System.out.println("Two thread time: " + (System.currentTimeMillis() - startTime) + " ms.");
+
+        }
+
     }
-}
+
 
 

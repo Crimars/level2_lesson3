@@ -46,7 +46,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    static final int size = 10000000;
+    static final int size = 100;
     static final int half = size / 2;
 
     float[] arr = new float[size];
@@ -75,27 +75,49 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = 1.0f;
         }
+        System.out.println(Arrays.toString(arr));
+
+        float[] leftHalf = new float[half];
+        float[] rightHalf = new float[half];
         long startTime = System.currentTimeMillis();
 
-
-        int [] initArr = {1, 2 , 3, 4, 5, 6, 7, 8, 9, 10};
-        System.out.println(Arrays.toString(initArr));
-
-        int[] leftHalf = new int [5];
-        int[] rightHalf = new int [5];
-        System.arraycopy(initArr, 0, leftHalf, 0, 5);
-        System.arraycopy(initArr, 5, rightHalf, 0, 5);
+        System.arraycopy(arr, 0, leftHalf, 0, half);
+        System.arraycopy(arr, half, rightHalf, 0, half);
         System.out.println(Arrays.toString(leftHalf));
         System.out.println(Arrays.toString(rightHalf));
 
-        int[] mergeArr = new int [10];
-        System.arraycopy(leftHalf, 0, mergeArr, 0, 5);
-        System.arraycopy(rightHalf, 0, mergeArr, 5, 5);
-        System.out.println(Arrays.toString(mergeArr));
+        Thread one = new Thread(new Runnable() {
+        public void run() {
+                for (int i = 0; i < leftHalf.length; i++) {
+                    leftHalf[i] = (float) (leftHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+                }
+            }
+        });
+        one.start();
 
+        Thread two = new Thread(new Runnable() {
+        public void run() {
+                for (int i = 0; i < rightHalf.length; i++) {
+                    rightHalf[i] = (float) (rightHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+                }
+            }
+
+        });
+        two.start();
+
+        try {
+            one.join();
+            two.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+            System.arraycopy(leftHalf, 0, arr, 0, half);
+            System.arraycopy(rightHalf, 0, arr, half, half);
+            System.out.println(Arrays.toString(arr));
+
+        }
         System.out.println("Two thread time: " + (System.currentTimeMillis() - startTime) + " ms.");
-
     }
-
-
 }
+
+

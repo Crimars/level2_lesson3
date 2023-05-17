@@ -87,7 +87,7 @@ public class Main {
         System.out.println(Arrays.toString(rightHalf));
 
         Thread one = new Thread(new Runnable() {
-        public void run() {
+            public void run() {
                 for (int i = 0; i < leftHalf.length; i++) {
                     leftHalf[i] = (float) (leftHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
                 }
@@ -96,7 +96,7 @@ public class Main {
         one.start();
 
         Thread two = new Thread(new Runnable() {
-        public void run() {
+            public void run() {
                 for (int i = 0; i < rightHalf.length; i++) {
                     rightHalf[i] = (float) (rightHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
                 }
@@ -105,21 +105,20 @@ public class Main {
         });
         two.start();
 
-//        try {
-//            one.join();
-//            two.join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-
-            System.arraycopy(leftHalf, 0, arr, 0, half);
-            System.arraycopy(rightHalf, 0, arr, half, half);
-            System.out.println(Arrays.toString(arr));
-
-        System.out.println("Two thread time: " + (System.currentTimeMillis() - startTime) + " ms.");
+        try {
+            one.join();
+            two.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
 
         }
+        System.arraycopy(leftHalf, 0, arr, 0, half);
+        System.arraycopy(rightHalf, 0, arr, half, half);
+        System.out.println(Arrays.toString(arr));
 
+        System.out.println("Two thread time: " + (System.currentTimeMillis() - startTime) + " ms.");
     }
+}
 
 
 

@@ -46,7 +46,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    static final int size = 10000;
+    static final int size = 50;
     static final int half = size / 2;
 
     float[] arr = new float[size];
@@ -98,7 +98,8 @@ public class Main {
         Thread two = new Thread(new Runnable() {
             public void run() {
                 for (int i = 0; i < rightHalf.length; i++) {
-                    rightHalf[i] = (float) (rightHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+                    //rightHalf[i] = (float) (rightHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+                   rightHalf[i] = (float) (rightHalf[i] * Math.sin(0.2f + (i + half)/ 5) * Math.cos(0.2f + (i + half)/ 5) * Math.cos(0.4f +(i + half)/ 2));
                 }
             }
 
